@@ -80,6 +80,16 @@ def stop():
     status = player.stop()
     return jsonify(status)
 
+@app.route('/seek', methods=['POST'])
+def seek():
+    data = request.json
+    time = data.get('time')
+    if time is None:
+        return jsonify({'error': 'Time is required'}), 400
+    
+    status = player.seek(time)
+    return jsonify(status)
+
 @app.route('/volume', methods=['POST'])
 def volume():
     data = request.json
