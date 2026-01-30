@@ -8,6 +8,10 @@ import threading
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def index():
+    return jsonify({'name': 'Performance Manager Remote Player', 'status': 'running', 'endpoints': ['/play', '/pause', '/stop', '/status', '/health']})
+
 # Global player instance
 class Player:
     def __init__(self):
