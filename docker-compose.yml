@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  remote-player:
+    build: .
+    image: performance-manager-remote-player:latest
+    container_name: remote-player
+    ports:
+      - "5001:5001"
+    devices:
+      - /dev/snd:/dev/snd
+    volumes:
+      - /run/user/1000/pulse:/run/user/1000/pulse
+      - ~/.config/pulse/cookie:/home/vlcuser/.config/pulse/cookie
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - PULSE_COOKIE=/home/vlcuser/.config/pulse/cookie
+    group_add:
+      - audio
+    restart: unless-stopped
